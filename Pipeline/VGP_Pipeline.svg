@@ -1,0 +1,98 @@
+<svg width="680" height="1120" viewBox="0 0 680 1120" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+
+<!-- START -->
+<rect x="250" y="30" width="180" height="44" rx="8" fill="#f1efe8" stroke="#5f5e5a" stroke-width="0.5"/>
+<text x="340" y="52" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#2c2c2a">Upload Data to Galaxy</text>
+
+<line x1="340" y1="74" x2="340" y2="108" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 1: DATA INPUT -->
+<rect x="250" y="108" width="180" height="56" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text x="340" y="126" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#085041">Input Data</text>
+<text x="340" y="144" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#0f6e56">3 HiFi files + 2 Hi-C files</text>
+
+<line x1="340" y1="164" x2="340" y2="198" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 2: ORGANIZE COLLECTIONS -->
+<rect x="250" y="198" width="180" height="56" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text x="340" y="216" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#085041">Organize Collections</text>
+<text x="340" y="234" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#0f6e56">Create HiFi collection</text>
+
+<line x1="340" y1="254" x2="340" y2="288" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 3: CUTADAPT -->
+<rect x="250" y="288" width="180" height="56" rx="8" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text x="340" y="306" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#085041">Cutadapt</text>
+<text x="340" y="324" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#0f6e56">Remove adapter sequences</text>
+
+<line x1="340" y1="344" x2="340" y2="378" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 4: MERYL -->
+<rect x="250" y="378" width="180" height="56" rx="8" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.5"/>
+<text x="340" y="396" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#0c447c">Meryl</text>
+<text x="340" y="414" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#185fa5">K-mer counting (k=31)</text>
+
+<line x1="340" y1="434" x2="340" y2="468" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 5: GENOMESCOPE2 -->
+<rect x="250" y="468" width="180" height="56" rx="8" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.5"/>
+<text x="340" y="486" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#0c447c">GenomeScope2</text>
+<text x="340" y="504" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#185fa5">Genome size estimation</text>
+
+<line x1="340" y1="524" x2="340" y2="558" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 6: HIFIASM HI-C PHASED -->
+<rect x="250" y="558" width="180" height="56" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+<text x="340" y="576" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#3c3489">Hifiasm Hi-C Mode</text>
+<text x="340" y="594" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#534ab7">Generate Hap1 + Hap2</text>
+
+<line x1="340" y1="614" x2="340" y2="648" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 7: GFA TO FASTA CONVERSION -->
+<rect x="250" y="648" width="180" height="56" rx="8" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+<text x="340" y="666" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#3c3489">gfastats</text>
+<text x="340" y="684" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#534ab7">Convert GFA to FASTA</text>
+
+<line x1="340" y1="704" x2="340" y2="738" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 8: QUALITY CONTROL - gfastats -->
+<rect x="250" y="738" width="180" height="56" rx="8" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.5"/>
+<text x="340" y="756" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#0c447c">gfastats Stats</text>
+<text x="340" y="774" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#185fa5">N50, contigs, length</text>
+
+<line x1="340" y1="794" x2="340" y2="828" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 9: BUSCO -->
+<rect x="250" y="828" width="180" height="56" rx="8" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.5"/>
+<text x="340" y="846" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#0c447c">BUSCO</text>
+<text x="340" y="864" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#185fa5">Genome completeness</text>
+
+<line x1="340" y1="884" x2="340" y2="918" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- STEP 10: MERQURY -->
+<rect x="250" y="918" width="180" height="56" rx="8" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.5"/>
+<text x="340" y="936" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#0c447c">Merqury</text>
+<text x="340" y="954" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#185fa5">K-mer based QC</text>
+
+<line x1="340" y1="974" x2="340" y2="1008" stroke="#888780" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+
+<!-- FINAL -->
+<rect x="230" y="1008" width="220" height="56" rx="8" fill="#eaf3de" stroke="#3b6d11" stroke-width="0.5"/>
+<text x="340" y="1026" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#27500a">Final Assembly</text>
+<text x="340" y="1044" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="12" fill="#3b6d11">Two haplotype-resolved genomes</text>
+
+<!-- LEGEND -->
+<text x="40" y="1090" text-anchor="start" font-family="Arial, sans-serif" font-size="14" font-weight="500" fill="#2c2c2a">Pipeline Steps:</text>
+<rect x="180" y="1082" width="16" height="16" rx="4" fill="#e1f5ee" stroke="#0f6e56" stroke-width="0.5"/>
+<text x="202" y="1094" font-family="Arial, sans-serif" font-size="12" fill="#5f5e5a">Data &amp; Preprocessing</text>
+<rect x="350" y="1082" width="16" height="16" rx="4" fill="#e6f1fb" stroke="#185fa5" stroke-width="0.5"/>
+<text x="372" y="1094" font-family="Arial, sans-serif" font-size="12" fill="#5f5e5a">Genome Profiling &amp; QC</text>
+<rect x="520" y="1082" width="16" height="16" rx="4" fill="#eeedfe" stroke="#534ab7" stroke-width="0.5"/>
+<text x="542" y="1094" font-family="Arial, sans-serif" font-size="12" fill="#5f5e5a">Assembly</text>
+
+</svg>
