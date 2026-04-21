@@ -1,0 +1,19 @@
+# Uploading fasta datasets from Zenodo
+# PacBio HiFi datasets
+
+https://zenodo.org/record/6098306/files/HiFi_synthetic_50x_01.fasta
+https://zenodo.org/record/6098306/files/HiFi_synthetic_50x_02.fasta
+https://zenodo.org/record/6098306/files/HiFi_synthetic_50x_03.fasta
+# datatype: fasta
+
+# Uploading fastqsanger.gz datasets from Zenodo
+# Illumina Hi-C data 
+-
+https://zenodo.org/record/5550653/files/SRR7126301_1.fastq.gz
+https://zenodo.org/record/5550653/files/SRR7126301_2.fastq.gz
+# datatype: fastqsanger.gz
+
+# Uploading BioNano datasets from Zenodo
+
+https://zenodo.org/records/5887339/files/bionano.cmap
+# datatype: cmap
