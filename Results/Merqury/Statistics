@@ -1,6 +1,0 @@
-Merqury statistics
-
-Assembly        Type    k-mers_in_assembly   total_k-mers   completeness(%)
-assembly_01     all     10792811             13010260        82.9562
-assembly_02     all     11611483             13010260        89.2487
-both            all     13010244             13010260        99.9999
