@@ -1,0 +1,246 @@
+================================================================================
+          VGP GENOME ASSEMBLY PIPELINE - Hi-C PHASED MODE
+================================================================================
+
+                        ┌─────────────────────────┐
+                        │  Upload Data to Galaxy  │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │      INPUT DATA         │
+                        │ ─────────────────────── │
+                        │ 3 HiFi files +          │
+                        │ 2 Hi-C files            │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │  Organize Collections   │
+                        │ ─────────────────────── │
+                        │ Create HiFi collection  │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │       Cutadapt          │
+                        │ ─────────────────────── │
+                        │ Remove adapter          │
+                        │ sequences               │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │        Meryl            │
+                        │ ─────────────────────── │
+                        │ K-mer counting (k=31)   │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │     GenomeScope2        │
+                        │ ─────────────────────── │
+                        │ Genome size estimation  │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │  Hifiasm Hi-C Mode      │
+                        │ ─────────────────────── │
+                        │ Generate Hap1 + Hap2    │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │      gfastats           │
+                        │ ─────────────────────── │
+                        │ Convert GFA to FASTA    │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │   gfastats Stats        │
+                        │ ─────────────────────── │
+                        │ N50, contigs, length    │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │        BUSCO            │
+                        │ ─────────────────────── │
+                        │ Genome completeness     │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │       Merqury           │
+                        │ ─────────────────────── │
+                        │ K-mer based QC          │
+                        └───────────┬─────────────┘
+                                    │
+                                    ▼
+                        ┌─────────────────────────┐
+                        │   FINAL ASSEMBLY        │
+                        │ ─────────────────────── │
+                        │ Two haplotype-resolved  │
+                        │ genomes                 │
+                        └─────────────────────────┘
+
+
+================================================================================
+                              PIPELINE STEPS
+================================================================================
+
+[TEAL] Data & Preprocessing
+  └─ Input Data
+  └─ Organize Collections
+  └─ Cutadapt
+
+[BLUE] Genome Profiling & Quality Control
+  └─ Meryl
+  └─ GenomeScope2
+  └─ gfastats Stats
+  └─ BUSCO
+  └─ Merqury
+
+[PURPLE] Assembly
+  └─ Hifiasm Hi-C Mode
+  └─ gfastats (GFA to FASTA conversion)
+
+[GREEN] Final Output
+  └─ Final Assembly (Hap1 + Hap2)
+
+
+================================================================================
+                           DETAILED STEP BREAKDOWN
+================================================================================
+
+STEP 1: Upload Data to Galaxy
+  Purpose: Import all sequencing data
+  Files needed:
+    - HiFi_synthetic_50x_01.fasta
+    - HiFi_synthetic_50x_02.fasta
+    - HiFi_synthetic_50x_03.fasta
+    - SRR7126301_1.fastq.gz (Hi-C forward)
+    - SRR7126301_2.fastq.gz (Hi-C reverse)
+
+STEP 2: Input Data
+  Description: Organize uploaded files
+  Data types:
+    - HiFi reads: PacBio HiFi sequencing (50x coverage)
+    - Hi-C reads: Illumina paired-end for phasing
+
+STEP 3: Organize Collections
+  Tool: Galaxy Collections
+  Action: Group 3 HiFi files into single collection
+  Output: HiFi_collection
+
+STEP 4: Cutadapt
+  Tool: Cutadapt v4.4+galaxy0
+  Purpose: Remove adapter sequences from HiFi reads
+  Parameters:
+    - Adapter 1: ATCTCTCTCAACAACAACAACGGAGGAGGAGGAAAAGAGAGAGAT
+    - Adapter 2: ATCTCTCTCTTTTCCTCCTCCTCCGTTGTTGTTGTTGAGAGAGAT
+  Output: HiFi_collection (trimmed)
+
+STEP 5: Meryl
+  Tool: Meryl
+  Purpose: Generate k-mer spectrum for genome profiling
+  Parameters:
+    - K-mer size: 31
+  Output: meryldb, histogram
+
+STEP 6: GenomeScope2
+  Tool: GenomeScope v2.0+galaxy2
+  Purpose: Estimate genome characteristics
+  Parameters:
+    - Ploidy: 2 (diploid)
+    - K-mer length: 31
+  Output: Genome size, heterozygosity, coverage estimates
+
+STEP 7: Hifiasm Hi-C Mode
+  Tool: Hifiasm v0.19.8+galaxy0
+  Purpose: Generate phased genome assembly
+  Input:
+    - HiFi_collection (trimmed)
+    - Hi-C reads (forward + reverse)
+  Output:
+    - Hap1 contigs graph (.gfa)
+    - Hap2 contigs graph (.gfa)
+
+STEP 8: gfastats (Conversion)
+  Tool: gfastats v1.3.6+galaxy0
+  Purpose: Convert GFA format to FASTA
+  Output:
+    - Hap1 contigs FASTA
+    - Hap2 contigs FASTA
+
+STEP 9: gfastats Stats
+  Tool: gfastats v1.3.6+galaxy0
+  Purpose: Calculate assembly statistics
+  Metrics:
+    - Number of contigs
+    - Total assembly length
+    - N50/NG50
+    - Largest contig
+    - GC content
+
+STEP 10: BUSCO
+  Tool: BUSCO v5.5.0+galaxy0
+  Purpose: Assess genome completeness
+  Parameters:
+    - Lineage: Saccharomycetes
+    - Mode: Genome assemblies (DNA)
+  Metrics:
+    - Complete & single-copy BUSCOs
+    - Complete & duplicated BUSCOs
+    - Fragmented BUSCOs
+    - Missing BUSCOs
+
+STEP 11: Merqury
+  Tool: Merqury v1.3+galaxy3
+  Purpose: K-mer based assembly evaluation
+  Input:
+    - Merged meryldb
+    - Hap1 and Hap2 assemblies
+  Output:
+    - K-mer spectra plots
+    - Quality value (QV) statistics
+    - Assembly completeness metrics
+
+STEP 12: Final Assembly
+  Result: Two high-quality haplotype-resolved genome assemblies
+  Expected:
+    - Hap1: ~11-12 Mbp
+    - Hap2: ~11-12 Mbp
+    - BUSCO completeness: >95%
+    - Low duplication: <5%
+
+
+================================================================================
+                           KEY QUALITY METRICS
+================================================================================
+
+Genome Size:         ~11.7 Mbp (from GenomeScope2)
+Heterozygosity:      ~0.576%
+Coverage:            50x (HiFi)
+Expected Contigs:    <20 per haplotype
+N50 Target:          >500 Kbp
+BUSCO Completeness:  >95%
+Duplication Rate:    <5%
+
+
+================================================================================
+                              NOTES
+================================================================================
+
+• Hi-C phased mode produces cleaner assemblies than solo mode
+• Purging step usually NOT needed with Hi-C phasing
+• Both haplotypes (Hap1 and Hap2) should be similar in size
+• Low BUSCO duplication indicates good phasing
+• Tutorial uses yeast (S. cerevisiae) as example organism
+
+
+================================================================================
+                          END OF PIPELINE
+================================================================================
